@@ -1,0 +1,330 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SportFit Store</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style> 
+
+    body{ 
+
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    color: #fff;
+
+    background:
+        radial-gradient(circle at 20% 30%, rgba(255, 85, 0, 0.18), transparent 35%),
+        radial-gradient(circle at 80% 20%, rgba(255, 120, 0, 0.15), transparent 30%),
+        radial-gradient(circle at 60% 80%, rgba(255, 80, 0, 0.12), transparent 40%),
+        linear-gradient(135deg, #050505 0%, #0b0b0f 45%, #111827 100%);
+
+    background-attachment: fixed;
+        
+    margin:0; font-family:Arial,Helvetica,sans-serif; 
+    color:white; }
+
+    /* Side Floating Button */ 
+    .fitness-section{
+    text-align:center;
+    padding:60px 0;
+}
+
+.fitness-btn{
+    display:inline-block;
+    background:#ff7a00;
+    color:white;
+    padding:15px 35px;
+    border-radius:40px;
+    text-decoration:none;
+    font-size:20px;
+    font-weight:bold;
+
+    box-shadow:0 0 20px rgba(255,122,0,0.5);
+    transition:0.3s;
+
+    position:sticky;
+    bottom:20px;
+}
+
+    .fitness-btn:hover{ 
+    background:#ff8800; 
+    transform:translateY(-50%) scale(1.05); } 
+    </style>
+
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="{% url 'index' %}">
+            SportFit
+        </a>
+
+        <a href="{% url 'login' %}" class="btn btn-outline-light">Login</a>
+        
+        <a href="{% url 'signup' %}" class="btn btn-warning">Create Account</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbar">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+    <a class="nav-link active" href="{% url 'index' %}">Home</a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'about' %}">About</a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'products' %}">Products</a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'sports-accessories' %}">Accessories</a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'new-products' %}">New</a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'cart' %}">Cart</a>
+</li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="position-relative">
+
+<video autoplay muted loop playsinline
+class="w-100"
+style="height:100vh; object-fit:cover;">
+    <source src="{% static 'video/sports-video.mp4' %}" type="video/mp4">
+</video>
+
+<div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-50"></div>
+
+<div class="position-absolute top-50 start-50 translate-middle text-center text-white">
+    <h1 class="display-3 fw-bold">Sports & Activewear Store</h1>
+    <p class="lead">Premium Sports Shoes, T-Shirts, Hoodies & Gym Wear</p>
+    <a href="{% url 'products' %}" class="btn btn-warning btn-lg">Shop Now</a>
+</div>
+</section>
+
+<!-- Categories -->
+<div class="container my-5">
+    <h2 class="text-center mb-4">Shop by Category</h2>
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+            <div class="card shadow">
+                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500"
+                     class="card-img-top" alt="">
+                <div class="card-body text-center">
+                    <h5>Running Shoes</h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow">
+                <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=500"
+                     class="card-img-top" alt="">
+                <div class="card-body text-center">
+                    <h5>Gym Wear</h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow">
+                <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500"
+                     class="card-img-top" alt=""
+                      style="height: 160px; object-fit:cover;">
+                <div class="card-body text-center">
+                    <h5>Hoodies</h5>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- New Arrivals -->
+<div class="container my-5">
+    <h2 class="text-center mb-4">New Arrivals</h2>
+
+    <div class="row g-4">
+
+        <div class="col-md-3">
+            <div class="card shadow">
+
+                <img src="{% static 'image/images4.jpg'%}" 
+                class="card-img-top" style="height:250px; object-fit:cover;">
+                
+                
+                <div class="card-body text-center">
+                    <h5>Running Shoes</h5>
+                    <p class="text-primary fw-bold">₹2,999</p>
+                    <span class="badge bg-danger">NEW</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow">
+                <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500"
+                class="card-img-top" style="height:250px; object-fit:cover;">
+                <div class="card-body text-center">
+                    <h5>Sports T-Shirt</h5>
+                    <p class="text-primary fw-bold">₹799</p>
+                    <span class="badge bg-danger">NEW</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow">
+                <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=500"
+                class="card-img-top" style="height:280px; object-fit:cover;">
+                <div class="card-body text-center">
+                    <h5>Smart Watch</h5>
+                    <p class="text-primary fw-bold">₹1,999</p>
+                    <span class="badge bg-danger">NEW</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow">
+                <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500"
+                class="card-img-top" style="height:280px; object-fit:cover;">
+                <div class="card-body text-center">
+                    <h5>Headphones</h5>
+                    <p class="text-primary fw-bold">₹1,499</p>
+                    <span class="badge bg-danger">NEW</span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<!-- Featured Products -->
+<div class="container my-5">
+    <h2 class="text-center mb-4">Featured Products</h2>
+
+    <div class="row g-4">
+
+        <div class="col-md-3">
+            <div class="card shadow">
+                
+                    <img src="{% static 'image/images5.jpg'%}" class="card-img-top"
+                    style="height:140px; object-fit:cover;">>
+                
+                     
+                <div class="card-body text-center">
+                    <h5>Nike Running Shoe</h5>
+                    <p class="fw-bold text-primary">₹2,999</p>
+                    <a href="product-details.html" class="btn btn-primary">
+                        View Details
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow">
+                
+                    <img src="{% static 'image/images6.jpg'%}" 
+                        class="card-img-top"
+                        style="height:160px; object-fit:cover;">
+                     
+                <div class="card-body text-center">
+                    <h5>Sports T-Shirt</h5>
+                    <p class="fw-bold text-primary">₹799</p>
+                    <a href="product-details.html" class="btn btn-primary">
+                        View Details
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow">
+                
+                    <img src="{% static 'image/image1.jpg' %}"
+                    class="card-img-top"
+                    style="height:180px; object-fit:cover;">
+                
+                
+                <div class="card-body text-center">
+                    <h5>Track Pant</h5>
+                    <p class="fw-bold text-primary">₹1,299</p>
+                    <a href="{% url 'productsdetails' %}" class="btn btn-primary">
+                        View Details
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow">
+                <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500"
+                     class="card-img-top"
+                     style="height: 150px; object-fit:cover;">
+                <div class="card-body text-center">
+                    <h5>Premium Hoodie</h5>
+                    <p class="fw-bold text-primary">₹1,999</p>
+                    <a href="{% url 'productsdetails' %}" class="btn btn-primary">
+                        View Details
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="text-center my-4">
+<a href="{% url 'gift' %}" class="btn btn-warning">₹500</a>
+<a href="{% url 'gift' %}" class="btn btn-warning">₹1000</a>
+<a href="{% url 'gift' %}" class="btn btn-warning">₹2000</a>
+<a href="{% url 'gift' %}" class="btn btn-warning">₹5000</a>
+</div>
+<div class="text-center my-4">
+    <a href="{% url 'offers' %}" class="btn btn-danger btn-lg">
+        🔥 View Special Offers
+    </a>
+</div>
+
+<div class="fitness-section">
+    <a href="{% url 'fitness' %}" class="fitness-btn">
+        💪 Fitness Tools
+    </a>
+</div>
+
+<!-- Footer -->
+<footer class="bg-primary text-white text-center py-3">
+    <p class="mb-0">© 2026 SportFit Store | All Rights Reserved</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

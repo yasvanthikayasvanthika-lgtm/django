@@ -1,0 +1,475 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IronForge Tools |  Fitness Tool</title>
+<meta name="description" content="AI workout recommender, supplement calculator, BMI/BMR/TDEE calculators, diet planner and gym assistant chatbot.">
+
+<!-- Stylesheet -->
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<!-- ============================================================
+     BACKGROUND FX — decorative animated grid, purely visual
+============================================================= -->
+<div class="bg-fx" aria-hidden="true">
+  <div class="bg-grid"></div>
+  <div class="bg-glow bg-glow--a"></div>
+  <div class="bg-glow bg-glow--b"></div>
+</div>
+
+<!-- ============================================================
+     HEADER / TOP NAVIGATION
+============================================================= -->
+<header class="site-header">
+  <div class="header-inner">
+
+    <a href="#top" class="brand" aria-label="IronForge Tools home">
+      <span class="brand-mark">
+        <!-- Barbell icon -->
+        <svg viewBox="0 0 48 24" width="34" height="17" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="9" width="6" height="6" rx="1" fill="currentColor"/>
+          <rect x="4" y="6" width="4" height="12" rx="1" fill="currentColor"/>
+          <rect x="10" y="11" width="28" height="2" fill="currentColor"/>
+          <rect x="40" y="6" width="4" height="12" rx="1" fill="currentColor"/>
+          <rect x="42" y="9" width="6" height="6" rx="1" fill="currentColor"/>
+        </svg>
+      </span>
+      <span class="brand-text">IRON<em>FORGE</em><small>TOOLS</small></span>
+    </a>
+
+    <!-- Primary tool navigation (tabs) -->
+    <nav class="tool-nav" aria-label="Fitness tools">
+      <button class="tool-nav__btn is-active" data-target="panel-workout" type="button">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M4 8v8M2 10v4M20 8v8M22 10v4M7 12h10M7 9v6M17 9v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <span>Workout AI</span>
+      </button>
+      <button class="tool-nav__btn" data-target="panel-supplement" type="button">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M8 3h8M9 3v4.5L5.5 13a4 4 0 003.4 6h6.2a4 4 0 003.4-6L15 7.5V3" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M6.5 15h11" stroke="currentColor" stroke-width="2"/></svg>
+        <span>Supplements</span>
+      </button>
+      <button class="tool-nav__btn" data-target="panel-calculator" type="button">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" stroke="currentColor" stroke-width="2"/><path d="M7 6h10M7 11h2M11 11h2M15 11h2M7 15h2M11 15h2M15 15h2M7 19h2M11 19h2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <span>Calculators</span>
+      </button>
+      <button class="tool-nav__btn" data-target="panel-diet" type="button">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 3c-1.5 2-3 3.5-3 6a3 3 0 006 0c0-2.5-1.5-4-3-6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 12v9M8 21h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <span>Diet Plans</span>
+      </button>
+    </nav>
+
+    <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<a id="top"></a>
+
+<!-- ============================================================
+     HERO
+============================================================= -->
+<section class="hero">
+  <div class="hero-inner">
+    <p class="hero-eyebrow">Built for the plates-and-progress crowd</p>
+    <h1 class="hero-title">Four tools. One <span>command center</span> for your training.</h1>
+    <p class="hero-sub">Generate a weekly workout split, dial in your supplement stack, run the core body-metric calculators, and build a meal plan — all instantly, all in your browser.</p>
+    <div class="hero-cta-row">
+      <button class="btn btn--primary" data-scroll-to="panel-workout">Build My Workout Plan</button>
+      <button class="btn btn--ghost" data-scroll-to="panel-calculator">Run a Quick Calculator</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MAIN — TOOL PANELS
+============================================================= -->
+<main class="tool-main">
+
+  <!-- ======================= 1. AI WORKOUT RECOMMENDER ======================= -->
+  <section class="tool-panel is-active" id="panel-workout" aria-labelledby="workout-title">
+    <div class="panel-head">
+      <span class="panel-index">01</span>
+      <div>
+        <h2 id="workout-title">AI Workout Recommender</h2>
+        <p>Tell us about yourself and your goal — we'll build a complete 7-day training split.</p>
+      </div>
+    </div>
+
+    <div class="panel-grid">
+      <!-- Input card -->
+      <form class="card form-card" id="workout-form" novalidate>
+        <div class="form-row">
+          <div class="field">
+            <label for="w-age">Age</label>
+            <input type="number" id="w-age" name="age" min="13" max="90" placeholder="e.g. 24" required>
+          </div>
+          <div class="field">
+            <label for="w-gender">Gender</label>
+            <select id="w-gender" name="gender" required>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="w-height">Height (cm)</label>
+            <input type="number" id="w-height" name="height" min="120" max="230" placeholder="e.g. 175" required>
+          </div>
+          <div class="field">
+            <label for="w-weight">Weight (kg)</label>
+            <input type="number" id="w-weight" name="weight" min="30" max="250" placeholder="e.g. 70" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="w-goal">Primary Fitness Goal</label>
+          <select id="w-goal" name="goal" required>
+            <option value="fat-loss">Fat Loss</option>
+            <option value="muscle-gain">Muscle Gain</option>
+            <option value="strength">Strength</option>
+            <option value="endurance">Endurance / Conditioning</option>
+            <option value="general">General Fitness</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="w-experience">Experience Level</label>
+          <select id="w-experience" name="experience" required>
+            <option value="beginner">Beginner (0–1 yr)</option>
+            <option value="intermediate">Intermediate (1–3 yrs)</option>
+            <option value="advanced">Advanced (3+ yrs)</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn--primary btn--block">
+          Generate My Weekly Plan
+        </button>
+      </form>
+
+      <!-- Result card -->
+      <div class="card result-card" id="workout-result">
+        <div class="empty-state">
+          <svg viewBox="0 0 24 24" width="40" height="40"><path d="M4 8v8M2 10v4M20 8v8M22 10v4M7 12h10M7 9v6M17 9v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>
+          <p>Fill out the form to generate your personalized weekly training split.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 2. SUPPLEMENT CALCULATOR ======================= -->
+  <section class="tool-panel" id="panel-supplement" aria-labelledby="supplement-title">
+    <div class="panel-head">
+      <span class="panel-index">02</span>
+      <div>
+        <h2 id="supplement-title">Supplement Calculator</h2>
+        <p>Daily protein, creatine, and water targets, plus a stack suggestion for your goal.</p>
+      </div>
+    </div>
+
+    <div class="panel-grid">
+      <form class="card form-card" id="supplement-form" novalidate>
+        <div class="form-row">
+          <div class="field">
+            <label for="s-weight">Body Weight (kg)</label>
+            <input type="number" id="s-weight" name="weight" min="30" max="250" placeholder="e.g. 70" required>
+          </div>
+          <div class="field">
+            <label for="s-activity">Training Frequency</label>
+            <select id="s-activity" name="activity" required>
+              <option value="low">1–2 sessions / week</option>
+              <option value="medium" selected>3–4 sessions / week</option>
+              <option value="high">5+ sessions / week</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="s-goal">Primary Goal</label>
+          <select id="s-goal" name="goal" required>
+            <option value="fat-loss">Fat Loss</option>
+            <option value="muscle-gain">Muscle Gain</option>
+            <option value="strength">Strength</option>
+            <option value="endurance">Endurance / Conditioning</option>
+            <option value="general">General Health</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="s-diet">Diet Preference</label>
+          <select id="s-diet" name="diet" required>
+            <option value="veg">Vegetarian</option>
+            <option value="nonveg">Non-Vegetarian</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn--primary btn--block">Calculate My Stack</button>
+      </form>
+
+      <div class="card result-card" id="supplement-result">
+        <div class="empty-state">
+          <svg viewBox="0 0 24 24" width="40" height="40"><path d="M8 3h8M9 3v4.5L5.5 13a4 4 0 003.4 6h6.2a4 4 0 003.4-6L15 7.5V3" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linejoin="round"/></svg>
+          <p>Enter your details to get protein, creatine and water targets.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 3. WORKOUT CALCULATOR SUITE ======================= -->
+  <section class="tool-panel" id="panel-calculator" aria-labelledby="calc-title">
+    <div class="panel-head">
+      <span class="panel-index">03</span>
+      <div>
+        <h2 id="calc-title">Body & Performance Calculators</h2>
+        <p>BMI, BMR, daily calories and a quick body-fat estimate.</p>
+      </div>
+    </div>
+
+    <!-- Sub-tabs for the 4 calculators -->
+    <div class="subtabs" role="tablist" aria-label="Calculators">
+      <button class="subtabs__btn is-active" data-calc="bmi" type="button" role="tab" aria-selected="true">BMI</button>
+      <button class="subtabs__btn" data-calc="bmr" type="button" role="tab" aria-selected="false">BMR</button>
+      <button class="subtabs__btn" data-calc="calories" type="button" role="tab" aria-selected="false">Daily Calories</button>
+      <button class="subtabs__btn" data-calc="bodyfat" type="button" role="tab" aria-selected="false">Body Fat %</button>
+    </div>
+
+    <!-- BMI -->
+    <div class="calc-block is-active" id="calc-bmi">
+      <div class="panel-grid">
+        <form class="card form-card" id="bmi-form" novalidate>
+          <div class="form-row">
+            <div class="field">
+              <label for="bmi-height">Height (cm)</label>
+              <input type="number" id="bmi-height" min="120" max="230" placeholder="e.g. 175" required>
+            </div>
+            <div class="field">
+              <label for="bmi-weight">Weight (kg)</label>
+              <input type="number" id="bmi-weight" min="30" max="250" placeholder="e.g. 70" required>
+            </div>
+          </div>
+          <button type="submit" class="btn btn--primary btn--block">Calculate BMI</button>
+        </form>
+        <div class="card result-card" id="bmi-result">
+          <div class="empty-state"><p>Your BMI and category will appear here.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BMR -->
+    <div class="calc-block" id="calc-bmr">
+      <div class="panel-grid">
+        <form class="card form-card" id="bmr-form" novalidate>
+          <div class="form-row">
+            <div class="field">
+              <label for="bmr-age">Age</label>
+              <input type="number" id="bmr-age" min="13" max="90" placeholder="e.g. 24" required>
+            </div>
+            <div class="field">
+              <label for="bmr-gender">Gender</label>
+              <select id="bmr-gender" required>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="bmr-height">Height (cm)</label>
+              <input type="number" id="bmr-height" min="120" max="230" placeholder="e.g. 175" required>
+            </div>
+            <div class="field">
+              <label for="bmr-weight">Weight (kg)</label>
+              <input type="number" id="bmr-weight" min="30" max="250" placeholder="e.g. 70" required>
+            </div>
+          </div>
+          <button type="submit" class="btn btn--primary btn--block">Calculate BMR</button>
+        </form>
+        <div class="card result-card" id="bmr-result">
+          <div class="empty-state"><p>Your Basal Metabolic Rate will appear here.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Daily Calories / TDEE -->
+    <div class="calc-block" id="calc-calories">
+      <div class="panel-grid">
+        <form class="card form-card" id="calories-form" novalidate>
+          <div class="form-row">
+            <div class="field">
+              <label for="cal-age">Age</label>
+              <input type="number" id="cal-age" min="13" max="90" placeholder="e.g. 24" required>
+            </div>
+            <div class="field">
+              <label for="cal-gender">Gender</label>
+              <select id="cal-gender" required>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="cal-height">Height (cm)</label>
+              <input type="number" id="cal-height" min="120" max="230" placeholder="e.g. 175" required>
+            </div>
+            <div class="field">
+              <label for="cal-weight">Weight (kg)</label>
+              <input type="number" id="cal-weight" min="30" max="250" placeholder="e.g. 70" required>
+            </div>
+          </div>
+          <div class="field">
+            <label for="cal-activity">Activity Level</label>
+            <select id="cal-activity" required>
+              <option value="1.2">Sedentary (little/no exercise)</option>
+              <option value="1.375">Light (1–3 days/week)</option>
+              <option value="1.55" selected>Moderate (3–5 days/week)</option>
+              <option value="1.725">Very Active (6–7 days/week)</option>
+              <option value="1.9">Athlete (2x/day training)</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn--primary btn--block">Calculate Daily Calories</button>
+        </form>
+        <div class="card result-card" id="calories-result">
+          <div class="empty-state"><p>Your maintenance, cutting and bulking calories will appear here.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Body Fat Estimator -->
+    <div class="calc-block" id="calc-bodyfat">
+      <div class="panel-grid">
+        <form class="card form-card" id="bodyfat-form" novalidate>
+          <div class="form-row">
+            <div class="field">
+              <label for="bf-gender">Gender</label>
+              <select id="bf-gender" required>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="bf-height">Height (cm)</label>
+              <input type="number" id="bf-height" min="120" max="230" placeholder="e.g. 175" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="bf-neck">Neck (cm)</label>
+              <input type="number" id="bf-neck" min="20" max="60" placeholder="e.g. 38" required>
+            </div>
+            <div class="field">
+              <label for="bf-waist">Waist (cm)</label>
+              <input type="number" id="bf-waist" min="40" max="180" placeholder="e.g. 85" required>
+            </div>
+          </div>
+          <div class="field" id="bf-hip-field">
+            <label for="bf-hip">Hip (cm) <small>— required for female</small></label>
+            <input type="number" id="bf-hip" min="40" max="180" placeholder="e.g. 95">
+          </div>
+          <button type="submit" class="btn btn--primary btn--block">Estimate Body Fat %</button>
+        </form>
+        <div class="card result-card" id="bodyfat-result">
+          <div class="empty-state"><p>Your estimated body fat % (U.S. Navy method) will appear here.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 4. DIET PLANNER ======================= -->
+  <section class="tool-panel" id="panel-diet" aria-labelledby="diet-title">
+    <div class="panel-head">
+      <span class="panel-index">04</span>
+      <div>
+        <h2 id="diet-title">Weekly Diet Planner</h2>
+        <p>Pick a goal and diet style — get a full 7-day meal plan.</p>
+      </div>
+    </div>
+
+    <form class="card form-card form-card--wide" id="diet-form" novalidate>
+      <div class="form-row form-row--3">
+        <div class="field">
+          <label for="d-goal">Diet Goal</label>
+          <select id="d-goal" required>
+            <option value="weight-loss">Weight Loss</option>
+            <option value="muscle-gain">Muscle Gain</option>
+            <option value="maintenance">Maintenance</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="d-type">Diet Style</label>
+          <select id="d-type" required>
+            <option value="veg">Vegetarian</option>
+            <option value="nonveg">Non-Vegetarian</option>
+          </select>
+        </div>
+        <div class="field field--btn">
+          <button type="submit" class="btn btn--primary btn--block">Generate Meal Plan</button>
+        </div>
+      </div>
+    </form>
+
+    <div id="diet-result" class="diet-result">
+      <div class="empty-state empty-state--wide">
+        <svg viewBox="0 0 24 24" width="40" height="40"><path d="M12 3c-1.5 2-3 3.5-3 6a3 3 0 006 0c0-2.5-1.5-4-3-6z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linejoin="round"/><path d="M12 12v9M8 21h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <p>Choose your goal and diet style to build a 7-day plan.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================================
+     FOOTER
+============================================================= -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p>&copy; <span id="footer-year"></span> IronForge Tools. All calculations are estimates for general guidance only — consult a coach, doctor or registered dietitian before making major changes.</p>
+  </div>
+</footer>
+
+<!-- ============================================================
+     5. GYM ASSISTANT CHATBOT — floating widget
+============================================================= -->
+<div class="chat-widget" id="chat-widget">
+  <button class="chat-launcher" id="chat-launcher" aria-label="Open gym assistant chat" aria-expanded="false">
+    <svg class="chat-launcher__icon-open" viewBox="0 0 24 24" width="26" height="26"><path d="M4 4h16v12H8l-4 4V4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/></svg>
+    <svg class="chat-launcher__icon-close" viewBox="0 0 24 24" width="22" height="22"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+
+  <div class="chat-panel" id="chat-panel">
+    <div class="chat-panel__head">
+      <div class="chat-panel__avatar">💪</div>
+      <div>
+        <strong>Coach Forge</strong>
+        <span>Gym Assistant &middot; online</span>
+      </div>
+    </div>
+
+    <div class="chat-panel__messages" id="chat-messages">
+      <!-- messages injected by JS -->
+    </div>
+
+    <div class="chat-quick" id="chat-quick">
+      <!-- quick reply chips injected by JS -->
+    </div>
+
+    <form class="chat-panel__input" id="chat-form">
+      <input type="text" id="chat-input" placeholder="Ask about workouts, diet, supplements…" autocomplete="off">
+      <button type="submit" aria-label="Send message">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path d="M3 11l18-8-8 18-2-8-8-2z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" fill="none"/></svg>
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- Toast notification for gauges / copy actions -->
+<div class="toast" id="toast"></div>
+
+<script src="{% static 'js/fitness.js' %}"></script>
+</body>
+</html>

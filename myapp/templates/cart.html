@@ -1,0 +1,199 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - SportFit Store</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+    body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    color: #fff;
+
+    background:
+        radial-gradient(circle at 20% 30%, rgba(255, 85, 0, 0.18), transparent 35%),
+        radial-gradient(circle at 80% 20%, rgba(255, 120, 0, 0.15), transparent 30%),
+        radial-gradient(circle at 60% 80%, rgba(255, 80, 0, 0.12), transparent 40%),
+        linear-gradient(135deg, #050505 0%, #0b0b0f 45%, #111827 100%);
+
+    background-attachment: fixed;
+}
+</style>
+
+</head>
+<body class="bg-light">
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="{% url 'index' %}">
+            SportFit
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbar">
+            <ul class="navbar-nav ms-auto">
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'index' %}">Home</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'about' %}">About</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'products' %}">Products</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link active" href="{% url 'cart' %}">Cart</a>
+    </li>
+</ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Cart Header -->
+<div class="bg-dark text-white text-center py-5">
+    <div class="container">
+        <h1>Shopping Cart</h1>
+        <p>Review your selected items</p>
+    </div>
+</div>
+
+
+
+<!-- Cart Table -->
+<div class="container my-5">
+
+    <div class="card shadow">
+        <div class="card-body">
+
+            <table class="table table-bordered table-hover text-center align-middle">
+                <thead class="table-primary">
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quality</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Nike Running Shoe</td>
+                        <td>₹2,999</td>
+                        <td>1</td>
+                        <td>₹2,999</td>
+                    </tr>
+
+                    <tr>
+                        <td>Sports T-Shirt</td>
+                        <td>₹799</td>
+                        <td>2</td>
+                        <td>₹799</td>
+                        
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <div class="container mt-5">
+    <h2>Shopping Cart</h2>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody id="cartItems"></tbody>
+    </table>
+
+    <h3>Total: ₹<span id="total">0</span></h3>
+</div>
+
+<script>
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+let output = "";
+let total = 0;
+
+cart.forEach((item, index) => {
+
+    total += item.price;
+
+    output += `
+    <tr>
+        <td>${item.name}</td>
+        <td>₹${item.price}</td>
+        <td>
+            <button class="btn btn-danger btn-sm"
+            onclick="deleteItem(${index})">
+            Delete
+        </button>
+        </td>
+    </tr>`;
+});
+
+function deleteItem(index) {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    cart.splice(index, 1);
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    location.reload();
+}
+
+document.getElementById("cartItems").innerHTML = output;
+document.getElementById("total").innerHTML = total;
+</script>
+
+    <!-- Summary -->
+    <div class="card shadow mt-4">
+        <div class="card-body">
+
+            <h4>Order Summary</h4>
+            <hr>
+
+            <p>Subtotal : ₹<span id="subtotal">2999</span></p>
+            <p>shipping : Free</p>
+            <h5 class="text-primary">
+                Grand Total : ₹<span id="grandtotal">2999</span>
+            </h5>
+
+            <a href="{% url 'checkout' %}" class="btn btn-success btn-lg mt-3">
+                Proceed to Checkout
+            </a>
+
+        </div>
+    </div>
+
+</div>
+
+
+<!-- Footer -->
+<footer class="bg-primary text-white text-center py-3">
+    <p class="mb-0">© 2026 SportFit Store | All Rights Reserved</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'js/cart.js' %}"></script>
+
+</body>
+</html>

@@ -1,0 +1,426 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Gym Equipment Store</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<style>
+
+    body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    color: #fff;
+
+    background:
+        radial-gradient(circle at 20% 30%, rgba(255, 85, 0, 0.18), transparent 35%),
+        radial-gradient(circle at 80% 20%, rgba(255, 120, 0, 0.15), transparent 30%),
+        radial-gradient(circle at 60% 80%, rgba(255, 80, 0, 0.12), transparent 40%),
+        linear-gradient(135deg, #050505 0%, #0b0b0f 45%, #111827 100%);
+
+    background-attachment: fixed;
+}
+
+
+h1{
+    font-weight:bold;
+}
+
+.card{
+    border:none;
+    border-radius:15px;
+    overflow:hidden;
+    transition:0.4s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    box-shadow:0px 8px 20px rgba(0,0,0,0.2);
+}
+
+.card-img-top{
+    height:230px;
+    object-fit:cover;
+}
+
+.badge-new{
+    position:absolute;
+    top:10px;
+    left:10px;
+    background:red;
+    color:white;
+    padding:6px 12px;
+    border-radius:20px;
+}
+
+.wishlist{
+    position:absolute;
+    top:10px;
+    right:10px;
+    background:white;
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:red;
+}
+
+.rating{
+    color:gold;
+}
+
+.old-price{
+    text-decoration:line-through;
+    color:gray;
+}
+
+.price{
+    color:#0d6efd;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.card button{
+    width:100%;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container py-5">
+
+<h1 class="text-center mb-5">
+🏋️ New Arrival Gym Equipment
+</h1>
+
+<div class="row g-4">
+
+{% comment %} Product 1 {% endcomment %}
+<div class="col-md-3">
+<div class="card position-relative">
+
+<span class="badge-new">NEW</span>
+
+<div class="wishlist">
+<i class="fa-solid fa-heart"></i>
+</div>
+
+<img src="{% static 'image/images14.jpg' %}" class="card-img-top">
+
+<div class="card-body text-center">
+
+<h5>Treadmill Pro</h5>
+
+<p class="rating">★★★★★</p>
+
+<p>
+<span class="old-price">₹54,999</span>
+</p>
+
+<p class="price">₹45,999</p>
+
+<button class="btn btn-dark"
+onclick="addToCart('Treadmill Pro',45999)">
+Add To Cart
+</button>
+
+</div>
+</div>
+</div>
+
+
+<div class="col-md-3">
+<div class="card position-relative">
+
+<span class="badge-new">NEW</span>
+
+<div class="wishlist">
+<i class="fa-solid fa-heart"></i>
+</div>
+
+<img src="{% static 'image/images15.jpg' %}" class="card-img-top">
+
+<div class="card-body text-center">
+
+<h5>Dumbbell Set</h5>
+
+<p class="rating">★★★★☆</p>
+
+<p>
+<span class="old-price">₹7,999</span>
+</p>
+
+<p class="price">₹5,999</p>
+
+<button class="btn btn-dark"
+onclick="addToCart('Dumbbell Set',5999)">
+Add To Cart
+</button>
+
+</div>
+</div>
+</div>
+
+
+<div class="col-md-3">
+<div class="card position-relative">
+
+<span class="badge-new">NEW</span>
+
+<div class="wishlist">
+<i class="fa-solid fa-heart"></i>
+</div>
+
+<img src="{% static 'image/images16.jpg' %}" class="card-img-top">
+
+<div class="card-body text-center">
+
+<h5>Exercise Bike</h5>
+
+<p class="rating">★★★★★</p>
+
+<p>
+<span class="old-price">₹22,999</span>
+</p>
+
+<p class="price">₹18,999</p>
+
+<button class="btn btn-dark"
+onclick="addToCart('Exercise Bike',18999)">
+Add To Cart
+</button>
+
+</div>
+</div>
+</div>
+
+
+<div class="col-md-3">
+<div class="card position-relative">
+
+<span class="badge-new">NEW</span>
+
+<div class="wishlist">
+<i class="fa-solid fa-heart"></i>
+</div>
+
+<img src="{% static 'image/images17.jpg' %}" class="card-img-top">
+
+<div class="card-body text-center">
+
+<h5>Multi Gym Machine</h5>
+
+<p class="rating">★★★★★</p>
+
+<p>
+<span class="old-price">₹89,999</span>
+</p>
+
+<p class="price">₹79,999</p>
+
+<button class="btn btn-dark"
+onclick="addToCart('Multi Gym Machine',79999)">
+Add To Cart
+</button>
+
+</div>
+</div>
+</div>
+
+
+<div class="col-md-3">
+<div class="card">
+
+     <span class="badge-new">NEW</span>
+
+<div class="wishlist">
+<i class="fa-solid fa-heart"></i>
+</div>
+
+<img src="{% static 'image/images18.jpg' %}" class="card-img-top">
+<div class="card-body text-center">
+<h5>Bench Press</h5>
+
+<p>
+<span class="old-price">₹28,999</span>
+</p>
+
+<p class="price">₹24,999</p>
+
+<button class="btn btn-dark"
+onclick="addToCart('Bench Press',24,999)">
+Add To Cart
+</button>
+
+</div>
+</div>
+</div>
+
+
+<div class="col-md-3">
+<div class="card">
+
+     <span class="badge-new">NEW</span>
+
+<div class="wishlist">
+<i class="fa-solid fa-heart"></i>
+</div>
+
+<img src="{% static 'image/images19.jpg' %}" class="card-img-top">
+<div class="card-body text-center">
+<h5>Kettlebell Set</h5>
+
+<p>
+<span class="old-price">₹5,999</span>
+</p>
+
+<p class="price">₹3,499</p>
+
+<button class="btn btn-dark"
+onclick="addToCart('Kettlebell Set',3499)">
+Add To Cart
+</button>
+
+</div>
+</div>
+</div>
+
+
+<div class="col-md-3">
+<div class="card">
+
+     <span class="badge-new">NEW</span>
+
+<div class="wishlist">
+<i class="fa-solid fa-heart"></i>
+</div>
+
+<img src="{% static 'image/images20.jpg' %}" class="card-img-top">
+<div class="card-body text-center">
+<h5>Rowing Machine</h5>
+
+<p>
+<span class="old-price">₹33,999</span>
+</p>
+
+<p class="price">₹29,999</p>
+
+<button class="btn btn-dark"
+onclick="addToCart('Rowing Machine',29999)">
+Add To Cart
+</button>
+
+</div>
+</div>
+</div>
+
+
+<div class="col-md-3">
+<div class="card">
+
+     <span class="badge-new">NEW</span>
+
+<div class="wishlist">
+<i class="fa-solid fa-heart"></i>
+</div>
+
+<img src="{% static 'image/images21.jpg' %}" class="card-img-top">
+<div class="card-body text-center">
+<h5>Cross Trainer</h5>
+
+<p>
+<span class="old-price">₹45,999</span>
+</p>
+
+<p class="price">₹39,999</p>
+
+<button class="btn btn-dark"
+onclick="addToCart('Cross Trainer',39999)">
+Add To Cart
+</button>
+
+</div>
+</div>
+</div>
+
+
+<div class="col-md-3">
+<div class="card">
+
+     <span class="badge-new">NEW</span>
+
+<div class="wishlist">
+<i class="fa-solid fa-heart"></i>
+</div>
+
+<img src="{% static 'image/images22.jpg' %}" class="card-img-top">
+<div class="card-body text-center">
+<h5>Barbell Kit</h5>
+
+<p>
+<span class="old-price">₹12,999</span>
+</p>
+
+<p class="price">₹8,999</p>
+
+<button class="btn btn-dark"
+onclick="addToCart('Barbell Kit',8999)">
+Add To Cart
+</button>
+
+</div>
+</div>
+</div>
+
+
+<div class="col-md-3">
+<div class="card">
+
+     <span class="badge-new">NEW</span>
+
+<div class="wishlist">
+<i class="fa-solid fa-heart"></i>
+</div>
+
+<img src="{% static 'image/images23.jpg' %}" class="card-img-top">
+<div class="card-body text-center">
+<h5>Home Gym Station</h5>
+
+<p>
+<span class="old-price">₹1,00,999</span>
+</p>
+
+<p class="price">₹99,999</p>
+
+<button class="btn btn-dark"
+onclick="addToCart('Home Gym Station',99999)">
+Add To Cart
+</button>
+
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+
+<script src="{% static 'js/cart.js' %}"></script>
+</body>
+</html>
+
